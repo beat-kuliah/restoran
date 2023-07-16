@@ -16,9 +16,9 @@
                 <tbody>
                     <tr>
                         <th scope="col"> Menu </th>
-                        <th scope="col"> Qty </th>
-                        <th scope="col"> Price </th>
-                        <th scope="col"> Note </th>
+                        <th scope="col"> Jumlah </th>
+                        <th scope="col"> Harga </th>
+                        <th scope="col"> Catatan </th>
                         <th scope="col"> Total </th>
                         <th scope="col"> Status </th>
                     </tr>

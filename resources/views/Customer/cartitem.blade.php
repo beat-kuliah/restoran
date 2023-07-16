@@ -1,5 +1,5 @@
 @include('Customer.navigation')
-@extends('Customer.footer')
+@extends('footer')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +18,8 @@
 </style>
 
 <body>
+<div class="container">
+
     @if(count($order->menuorder) == 0)
     <center>
         <h1 style="height: 70%">Tidak Ada Pesanan</h1>
@@ -27,7 +29,7 @@
         <table class="table-borderless" width="1000px" style="margin : 20px 0 30px 0;height: 70%">
             <thead>
                 <tr class="bg-success" style="text-align: center">
-                    <th scope="col">Delete</th>
+                    <th scope="col">Hapus</th>
                     <th scope="col">Nama</th>
                     <th scope="col">Harga</th>
                     <th scope="col">Jumlah</th>
@@ -38,7 +40,7 @@
                 <?php $total = 0 ?>
                 @foreach($order->menuorder as $menu)
                 <tr>
-                    <td><a href="/Cart/{{$order->orderID}}/{{$query}}/{{$menu->ID}}">Delete</a></td>
+                    <td><a href="/Cart/{{$order->orderID}}/{{$query}}/{{$menu->ID}}">Hapus</a></td>
                     <th scope="row">{{$menu->menu->name}}</th>
                     <td>Rp {{number_format($menu->menu->price, 0, ".", ".")}}</td>
                     <td>
@@ -85,7 +87,7 @@
     </center>
 
 
-    <center><button style="background-color: #1A8B9A; padding: 10px 200px 10px 200px" type="button" class="btn btn-primary button1" data-toggle="modal" data-target="#exampleModal">Order</button><br></center>
+    <center><button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">Order</button><br></center>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -96,16 +98,16 @@
                     </button>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a href="/Bill/{{$order->orderID}}/{{$total}}/cart"><button type="button" class="btn btn-primary">Save changes</button></a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Belum</button>
+                    <a href="/Bill/{{$order->orderID}}/{{$total}}/cart"><button type="button" class="btn btn-primary">Sudah</button></a>
                 </div>
             </div>
         </div>
     </div>
     @if($urlback != 'bill')
-        <center><a href="{{$urlback}}"><button style="background-color: #FF3A3A; margin-bottom: 10px; padding: 10px 192px 10px 192px;" type="button" class="btn btn-primary button1">kembali</button></a></center>
+        <center><a href="{{$urlback}}"><button type="button" class="btn btn-secondary btn-lg btn-block">Kembali</button></a></center>
     @else
-        <center><button style="background-color: #FF3A3A; margin-bottom: 10px; padding: 10px 192px 10px 192px;" type="button" class="btn btn-primary button1" data-toggle="modal" data-target="#exampleModal">kembali</button><br></center>
+        <center><button type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">Kembali</button><br></center>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -116,14 +118,15 @@
                     </button>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a href="/Bill/{{$order->orderID}}/cart/{{$total}}"><button type="button" class="btn btn-primary">Save changes</button></a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Belum</button>
+                    <a href="/Bill/{{$order->orderID}}/cart/{{$total}}"><button type="button" class="btn btn-primary">Sudah</button></a>
                 </div>
             </div>
         </div>
     </div>
     @endif
     @endif
+    </div>
 </body>
 
 </html>

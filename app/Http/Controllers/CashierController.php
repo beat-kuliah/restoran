@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\domain\HR\service\EmployeeService;
+use App\Domain\HR\Service\EmployeeService;
 use App\Domain\Sales\Entity\Menuorder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\domain\Sales\Service\SalesService;
+use App\Domain\Sales\Service\SalesService;
 use Illuminate\Support\Facades\Auth;
 
 class CashierController extends Controller{
 
+    private $svc;
+
+    public function __construct()
+    {
+        $this->svc = new SalesService();
+    }
     public function view(){
         return view('Cashier/login');
     }
@@ -20,8 +26,7 @@ class CashierController extends Controller{
     }
 
     public function cashierHome(){
-        $svc = new SalesService();
-        $tables = $svc->getAllTable();
+        $tables = $this->svc->getAllTable();
 
         return view('Cashier/index',[
             'tables' => $tables,
@@ -29,21 +34,23 @@ class CashierController extends Controller{
     }
 
     public function cashierTable($id){
-        $svc = new SalesService();
-        $table = $svc->getTableById($id);
-        $payments = $svc->getAllPayment();
+
+        $table = $this->svc->getTableById($id);
+        $payments = $this->svc->getAllPayment();
         $orderTable = null;
 
         foreach ($payments as $p){
             $orderTable = $p->order->where('tableId','=',$id)->get();
+
         }
 
         if ($table->statusMeja == 1){
-
-            return view('cashier/detail_bayar',[
+            return view('Cashier/detail_bayar',[
                 'table' => $table,
                 'orders' => $orderTable,
             ]);
+        }else{
+            return redirect('/CashierHome');
         }
 
 
@@ -56,8 +63,8 @@ class CashierController extends Controller{
             'password' => 'required',
         ]);
 
-        $svc = new EmployeeService();
-        $result = $svc->cashierLogin($req);
+        $this->svc = new EmployeeService();
+        $result = $this->svc->cashierLogin($req);
 
         if($result == true){
             return redirect('/CashierHome');
@@ -68,15 +75,15 @@ class CashierController extends Controller{
     }
 
     public function cashierPayment($tableId,$cashierId , $paymentId){
-        $svc = new SalesService();
-        $temp = $svc->updateMenuCashierStatus($cashierId, $paymentId);
+
+        $temp = $this->svc->updateMenuCashierStatus($cashierId, $paymentId);
 
         return redirect()->route('cashierTable',[$tableId]);
     }
 
     public function history(){
-        $svc = new SalesService();
-        $orders = $svc->getOrder();
+
+        $orders = $this->svc->getOrder();
 
         return view('Cashier/history',[
             'orders' => $orders,
@@ -84,8 +91,8 @@ class CashierController extends Controller{
     }
 
     public function orderDetail($id){
-        $svc = new SalesService();
-        $order = $svc->getOrderById($id);
+
+        $order = $this->svc->getOrderById($id);
 
         return view('Cashier/orderDetail',[
             'order' => $order,

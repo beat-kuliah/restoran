@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\domain\HR\entity\Employee;
-use App\domain\HR\service\EmployeeService;
+use App\Domain\HR\Service\EmployeeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Factory\HRFactory;
 
 class HRController extends Controller
 {
+
+    private $svc;
+
+    public function __construct()
+    {
+        $this->svc = new EmployeeService();
+    }
     public function getEmployee(){
 
-        $svc = new EmployeeService();
-        $employees = $svc->getAll();
+        $employees = $this->svc->getAll();
 
         return view('HR/hr',[
             'employees' => $employees,
@@ -20,9 +26,9 @@ class HRController extends Controller
     }
 
     public function getEmployeeById($id){
-        $svc = new EmployeeService();
-        $employeetype = $svc->getEmployeeType();
-        $employee = $svc->getById($id);
+
+        $employeetype = $this->svc->getEmployeeType();
+        $employee = $this->svc->getById($id);
 
         return view('HR/edit',[
             'employee' => $employee,
@@ -31,16 +37,16 @@ class HRController extends Controller
     }
 
     public function deleteEmployee($id){
-        $svc = new EmployeeService();
-        $employee = $svc->deleteData($id);
 
-        return redirect('/HR');
+        $employee = $this->svc->deleteData($id);
+
+        return redirect('/HR')->with(['info' => 'Data berhasil di delete']);;
     }
 
 
     public function getEmployeeType(){
-        $svc = new EmployeeService();
-        $employeetype = $svc->getEmployeeType();
+
+        $employeetype = $this->svc->getEmployeeType();
 
         return view('HR/create',[
             'employeetype' => $employeetype,
@@ -49,10 +55,10 @@ class HRController extends Controller
 
 
     public function updateEmployee(Request $req, $id){
-        $svc = new EmployeeService();
-        $update = $svc->updateData($req, $id);
 
-        return redirect('/HR');
+        $update = $this->svc->updateData($req, $id);
+
+        return redirect('/HR')->with(['info' => 'Data berhasil diubah']);;
     }
 
     public function postEmployee(Request $req){
@@ -64,17 +70,18 @@ class HRController extends Controller
 
         ]);
 
-        if ($validator->fails() || $req->employeetype == 3 && $req->password=="" ){
-            return redirect('/createEmployee/create')
-            ->withInput()
-            ->withErrors($validator);
+        if ($validator->fails() || $req->employeetype == 3 && $req->password=="" || $req->employeetype != 3 && $req->password !="" ){
+            return redirect('/createEmployee/create')->with(['error' => 'Input Error']);
         }
 
-        $svc = new EmployeeService();
-        $create = $svc->createNew($req);
 
-        return redirect('/HR');
+        // $create = $this->svc->createNew($req);
+        $Fact = new HRFactory();
+        $valid = $Fact->create($req->id, $req->name, $req->birthdate, $req->employeetype, $req->password, $req);
+
+        return redirect('/HR')->with(['info' => 'Data berhasil ditambahkan']);;
 
 
     }
+
 }

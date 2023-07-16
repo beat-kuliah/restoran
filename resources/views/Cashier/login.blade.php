@@ -19,14 +19,14 @@
 
                             <h3 class="text-center text-info">Login</h3>
                             <div class="form-group">
-                                <label for="cashierID" class="text-info">CashierId</label><br>
+                                <label for="cashierID" class="text-info">ID Kasir</label><br>
                                 <input type="text" name="id" id="cashiedID" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="password" class="text-info">Password:</label><br>
+                                <label for="password" class="text-info">Password</label><br>
                                 <input type="password" name="password" id="password" class="form-control">
                             </div>
-                            <button class="btn btn-info btn-block my-4" type="submit">Login</button>
+                            <button class="btn btn-info btn-block" type="submit">Login</button>
                         </form>
                     </div>
                 </div>

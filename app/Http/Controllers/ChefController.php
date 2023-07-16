@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\domain\Sales\service\SalesService;
+use App\Domain\Sales\Service\SalesService;
 use App\Domain\Sales\Entity\Menu;
 use App\Domain\Sales\Entity\MenuOrder;
 
 class ChefController extends Controller{
 
+    private $svc;
+
+    public function __construct()
+    {
+        $this->svc = new SalesService();
+    }
 
     public function view(){
-        $svc = new SalesService();
-        $tables = $svc->getAllTable();
+
+        $tables = $this->svc->getAllTable();
 
         return view('Chef/index',[
             'tables'=>$tables,
@@ -20,9 +26,9 @@ class ChefController extends Controller{
     }
 
     public function updateMenu($id){
-        $svc = new SalesService();
-        $tables = $svc->getAllTable();
-        $order = $svc->updateMenuOrderStatus($id);
+
+        $tables = $this->svc->getAllTable();
+        $order = $this->svc->updateMenuOrderStatus($id);
 
         return view('Chef/index',[
             'tables'=>$tables,
@@ -30,8 +36,8 @@ class ChefController extends Controller{
     }
 
     public function showRecipe($id){
-        $svc = new SalesService();
-        $menu = $svc->getMenuById($id);
+
+        $menu = $this->svc->getMenuById($id);
 
         $api = 'e5f12dc920b24dfd9f3dee909c56ece0';
         $url = 'https://api.spoonacular.com/recipes/'.$id.'/information?apiKey='.$api;

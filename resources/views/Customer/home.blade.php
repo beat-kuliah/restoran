@@ -1,5 +1,5 @@
 @include('Customer.navigation')
-@extends('Customer.footer')
+@extends('footer')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,9 +10,8 @@
   <script type="text/javascript" src="/js/app.js"></script>
   <title>Home</title>
 </head>
-
 <body>
-  <img src="https://www.singleplatform.com/wp-content/uploads/2018/12/5-Tips-for-Improving-Restaurant-Ambiance.jpg" width="100%" height="200px">
+  <img src="https://img.homejournal.com/202111/617f875610ea3.jpg" width="100%" height="200px">
   <center style="margin-top: 30px">Makanan Favorit</center>
   <div class="card-deck" style="padding: 10px; margin: 10px 225px 50px 225px;">
     @foreach($array1 as $array)
@@ -23,7 +22,7 @@
       </div>
       @foreach($menus as $menu)
       @if($array['id'] == $menu['menuId'])
-      <center style="margin: -30px 0px 0px 0px">{{ $menu['price'] }}</center>
+      <center style="margin: -30px 0px 0px 0px">Harga: {{ $menu['price'] }}</center>
       @endif
       @endforeach
       <center><a href="/Cartitem/{{$order->orderID}}/home/{{ $array['id'] }}">
@@ -41,7 +40,7 @@
       </div>
       @foreach($menus as $menu)
       @if($array['id'] == $menu['menuId'])
-      <center style="margin: -30px 0px 0px 0px">{{ $menu['price'] }}</center>
+      <center style="margin: -30px 0px 0px 0px">Harga: {{ $menu['price'] }}</center>
       @endif
       @endforeach
       <center><a href="/Cartitem/{{$order->orderID}}/home/{{ $array['id'] }}">

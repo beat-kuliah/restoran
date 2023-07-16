@@ -1,5 +1,5 @@
 @include('Customer.navigation')
-@extends('Customer.footer')
+@extends('footer')
 <!DOCTYPE html>
 <html lang="en">
 

@@ -14,7 +14,7 @@
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="/WaiterHome">Home</a>
+            
           </li>
         </ul>
       </div>

@@ -1,7 +1,7 @@
 @extends('Cashier.app')
 
-@section('content')
 
+@section('content')
 <div style="display: none">
     {{ $total = 0 }}
 </div>
@@ -65,8 +65,8 @@
                     </table>
 
                     <center>
-                        <a type='button' class="btn btn-success btn-lg" data-toggle="modal" data-target="#staticBackdrop">Bayar</a>
-                        <a href="index.php" type='button' class="btn btn-danger btn-lg">Batalkan</a>
+                        <a type='button' class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#staticBackdrop">Bayar</a>
+                        <a href="index.php" type='button' class="btn btn-secondary btn-lg  btn-block">Batalkan</a>
                     </center>
                 </div>
 

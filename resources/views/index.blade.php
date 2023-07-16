@@ -14,7 +14,7 @@
         <div class="hr">
 
             <br><br>
-            <table class="table table-striped">
+            <table class="table">
                 <tbody>
 
                     <tr>

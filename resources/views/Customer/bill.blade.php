@@ -1,4 +1,4 @@
-@extends('Customer.footer')
+@extends('footer')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,6 +21,7 @@
 </style>
 
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -46,10 +47,12 @@
     <center><div class="underline"></div></center>
     </div>
     <br><br><br>
-    <p style="font-size: 70px;color: rgb(0, 0, 0);text-align: center;margin-top: -12px">Payment Method</h2>
-    <center><a href="/Payment/{{$order->orderID}}/1"><button style="background-color: #1A3E9A; margin-bottom: 10px; padding: 10px 192px 10px 192px;" type="button" class="btn btn-primary button1">Cash</button></a></center>
-    <center><a href="/Payment/{{$order->orderID}}/2"><button style="background-color: #1A8B9A; margin-bottom: 30px; padding: 10px 192px 10px 192px;" type="button" class="btn btn-primary button1">Gopay</button></a></center>
+    <p style="font-size: 70px;color: rgb(0, 0, 0);text-align: center;margin-top: -12px">Metode Pembayaran</h2>
 
+    <div class="container">
+    <center><a href="/Payment/{{$order->orderID}}/1"><button type="button" class="btn btn-primary btn-lg btn-block ">Cash</button></a></center> <br>
+    <center><a href="/Payment/{{$order->orderID}}/2"><button type="button" class="btn btn-info btn-lg btn-block">Gopay</button></a></center>
+    </div>
 </body>
 
 </html>

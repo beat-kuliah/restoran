@@ -3,13 +3,16 @@
 
 <div class="row">
     <div class="container">
-        <h2 class="text-center">{{ $menu->name }}</h2>
-        <p> Ingredients </p>
+        <div class="heading">
+            <center>
+                <h2> Komposisi: {{ $menu->name }}</h2>
+            </center>
+        </div>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Image</th>
-                    <th>Ingredients</th>
+                    <th>Foto</th>
+                    <th>Komposisi</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,7 +32,7 @@
 
     <div class="card mb-5">
         <div class="card-body">
-            <h5 class="card-title">Instruction</h5>
+            <h5 class="card-title">Instruksi</h5>
             {{$instruction}}
         </div>
     </div>

@@ -14,8 +14,24 @@ class EmployeeService {
         $this->dao = new EmployeeDao();
     }
 
-    public function createNew(Request $req) {
-        $this->dao->create($req);
+    // public function createNew(Request $req)
+    // {
+    //     $data = new Employee();
+    //     $data->employeeID=$req->id;
+    //     $data->name=$req->name;
+    //     $data->birthdate=$req->birthdate;
+    //     $data->employeeType=$req->employeetype;
+
+    //     if($req->password){
+    //         $data->password=bcrypt($req->password);
+    //     }
+
+    //     $this->dao->saveEmployee($data);
+    // }
+
+    public function createNew(Employee $emp)
+    {
+        $this->dao->saveEmployee($emp);
     }
 
     public function getAll() {
@@ -27,11 +43,17 @@ class EmployeeService {
     }
 
     public function updateData(Request $req , $id) {
-        return $this->dao->update($req, $id);
+        $data = Employee::findOrFail($id);
+        $data->name=$req->name;
+        $data->employeetype=$req->employeetype;
+        $data->password=bcrypt($req->password);
+
+        return $this->dao->saveEmployee($data);
     }
 
     public function deleteData($id) {
-        return $this->dao->delete($id);
+        $data = Employee::findOrFail($id);
+        return $this->dao->delete($data);
     }
 
     public function getEmployeeType() {
@@ -41,6 +63,7 @@ class EmployeeService {
     public function cashierLogin(Request $req) {
         return $this->dao->login($req);
     }
+
 
 }
 

@@ -4,7 +4,7 @@
     <div class="container">
         <div class="heading">
             <center>
-                <h2>Order List</h2>
+                <h2>Daftar Pesanan</h2>
             </center>
         </div>
         <br>
@@ -27,7 +27,7 @@
                                                 {{$menuorder->qty }}
                                             </td>
                                             <td>
-                                                <a href="/Chef/{{ $menuorder->ID }}" class="btn btn-primary"> DONE </a>
+                                                <a href="/Chef/{{ $menuorder->ID }}" class="btn btn-primary"> Selesai </a>
                                             </td>
                                         </tr>
                                     @endif
@@ -43,3 +43,8 @@
     </div>
 </div>
 @endsection
+<script>
+    setTimeout(function() {
+        location.reload();
+    }, 3000);
+</script>

@@ -2,9 +2,16 @@
 
 @section('content')
 
-    <form name="formCreate" action="/createEmployee" method="POST">
-        {{ csrf_field() }}
+    @if ($message = Session::get('error'))
+    <div class="alert alert-danger alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+    </div>
+    @endif
 
+    <form name="formCreate" action="/createEmployee" method="POST">
+        @csrf
+        {{ csrf_field() }}
         <div class="row">
             <div class="col-sm-12 py-2">
                 <h5>Create</h5>
@@ -12,21 +19,21 @@
 
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">ID</span>
+                    <span class="input-group-text">ID Karyawan</span>
                 </div>
                 <input type="text" name="id" aria-label="ID" class="form-control">
             </div>
 
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">Name</span>
+                    <span class="input-group-text">Nama Karyawan</span>
                 </div>
                 <input type="text" name="name" aria-label="name" class="form-control">
             </div>
 
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">Birthdate</span>
+                    <span class="input-group-text">Tanggal Lahir</span>
                 </div>
                 <div>
                     <input class="form-control" type="text" id="dt" name="birthdate" aria-label="birthdate">
@@ -35,7 +42,7 @@
 
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">EmployeeType</span>
+                    <span class="input-group-text">Jabatan Karyawan</span>
                 </div>
                 <select id="employeetype" name="employeetype" class="form-control">
                     @foreach ($employeetype as $em)

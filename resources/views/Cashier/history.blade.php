@@ -1,5 +1,5 @@
 @extends('Cashier.app')
-
+@extends('footer')
 @section('content')
 
 <div style="display: none">

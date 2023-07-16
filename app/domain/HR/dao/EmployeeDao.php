@@ -30,40 +30,22 @@ class EmployeeDao
 
     public function findById($id)
     {
-        return Employee::get()->where('employeeID', '=', $id)->first();
+        return Employee::find($id);
     }
 
-    public function create(Request $req)
+    public function saveEmployee(Employee $emp)
     {
-        $data = new Employee();
-        $data->employeeID=$req->id;
-        $data->name=$req->name;
-        $data->birthdate=$req->birthdate;
-        $data->employeeType=$req->employeetype;
-
-        if($req->password){
-            $data->password=bcrypt($req->password);
-        }
-        $data->save();
+        $emp->save();
     }
 
-    public function update(Request $req , $id){
-        $data = Employee::findOrFail($id);
-        $data->name=$req->name;
-        $data->employeetype=$req->employeetype;
-        $data->password=bcrypt($req->password);
-        $data->save();
+    public function delete(Employee $emp)
+    {
+        $emp->delete();
     }
 
-    public function delete($id){
-        $data = Employee::findOrFail($id);
-        $data->delete();
-
-    }
-
-    public function findEmployeeType(){
+    public function findEmployeeType()
+    {
         return EmployeeType::all();
-
     }
 
     public function login(Request $req){

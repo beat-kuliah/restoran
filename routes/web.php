@@ -28,27 +28,6 @@ Route::get('/createEmployee/create', 'HRController@getEmployeeType');
 Route::post('/createEmployee', 'HRController@postEmployee');
 Route::delete('/deleteEmployee/{id}', 'HRController@deleteEmployee');
 
-
-
-// Route Cust
-Route::get('/da', function () {
-    $api = 'e5f12dc920b24dfd9f3dee909c56ece0';
-    $url1 = 'https://api.spoonacular.com/recipes/complexSearch?number=4&apiKey='.$api;
-    $url2 = 'https://api.spoonacular.com/recipes/complexSearch?offset=4&number=4&apiKey='.$api;
-    $json1 = file_get_contents($url1);
-    $json2 = file_get_contents($url2);
-    $array1 = json_decode($json1, true);
-    $array2 = json_decode($json2, true);
-    $menus = Menu::get();
-
-    return view('home',[
-        'array1' => $array1['results'],
-        'array2' => $array2['results'],
-        'menus' => $menus,
-    ]);
-
-});
-
  // Route Kasir
 Route::get('/Cashier', 'CashierController@view');
 Route::post('/CashierLogin', 'CashierController@login')->name('login');
@@ -74,6 +53,8 @@ Route::get('/ChefRecipe/{id}','ChefController@showRecipe');
 Route::get('/Waiters','WaitersController@view');
 Route::get('/WaitersTable/{id}','WaitersController@changeTable');
 Route::get('/WaitersOrder/{orderId}/{menuId}','WaitersController@changeOrder');
+Route::post('/AddTable','WaitersController@addTable')->name('addTable');
+Route::get('/Waiters/delete', 'WaitersController@delTable');
 
 
 //Route Customer
@@ -89,3 +70,6 @@ Route::get('/Bill/{order}/{back}', 'CustomerController@bill');
 Route::get('/Bill/{order}/{total}/{back}', 'CustomerController@updateAmount');
 Route::get('/Payment/{order}/{method}', 'CustomerController@payment');
 Route::get('/Order/{meja}', 'CustomerController@viewOrder');
+
+Route::get('/Barcode/{id}', 'CustomerController@barcode');
+Route::get('/Bayar/{id}', 'CustomerController@bayar');

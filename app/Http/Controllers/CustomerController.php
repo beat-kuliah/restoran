@@ -9,16 +9,22 @@ use App\Domain\Sales\Entity\Menu;
 use App\Domain\Sales\Entity\MenuOrder;
 use App\Domain\Sales\Entity\Payment;
 
-use App\domain\Sales\Service\SalesService;
+use App\Domain\Sales\Service\SalesService;
 
 class CustomerController extends Controller
 {
-    public $api = '143fe0842cf749eb9f1e564ac07fe9ab';
+    public $api = 'e5f12dc920b24dfd9f3dee909c56ece0';
+    private $svc;
+
+    public function __construct()
+    {
+        $this->svc = new SalesService();
+    }
 
     public function cust()
     {
-        $svc = new SalesService();
-        $tables = $svc->getAllTable();
+
+        $tables = $this->svc->getAllTable();
 
         return view('Customer/table',[
             'tables' => $tables,
@@ -28,21 +34,9 @@ class CustomerController extends Controller
 
     public function createOrder($meja)
     {
-        $svc = new SalesService();
-        $tables = $svc->createOrder($meja);
 
-        $mytime = \Carbon\Carbon::now();
-        $order = $mytime->format('dmYHis');
-        $table = Table::find($meja);
-        $table->statusMeja = 1;
-        $table->save();
-
-        $create = new Order;
-        $create->orderID = $order;
-        $create->tableID = $meja;
-        $create->orderDate = $mytime;
-        $create->stat = 1;
-        $create->save();
+        $table = $this->svc->saveTableCust($meja);
+        $order = $this->svc->saveOrderCust($meja);
 
         return redirect("Home/$order");
     }
@@ -55,9 +49,9 @@ class CustomerController extends Controller
         $json2 = file_get_contents($url2);
         $array1 = json_decode($json1, true);
         $array2 = json_decode($json2, true);
-        $menus = Menu::get();
-        $mytime = \Carbon\Carbon::now();
-        $orders = Order::find($order);
+
+        $menus = $this->svc->getAllMenu();
+        $orders = $this->svc->getOrderById($order);
         return view('Customer.home',[
             'array1' => $array1['results'],
             'array2' => $array2['results'],
@@ -70,14 +64,15 @@ class CustomerController extends Controller
     public function menu($order, $id)
     {
         if($id=="Menu"){
-        $url = 'https://api.spoonacular.com/recipes/complexSearch?offset=8&number=16&apiKey='.$this->api;
+            $url = 'https://api.spoonacular.com/recipes/complexSearch?offset=8&number=16&apiKey='.$this->api;
         }else{
-        $url = "https://api.spoonacular.com/recipes/complexSearch?query=".rawurlencode($id)."&number=16&apiKey=".$this->api;
+            $url = "https://api.spoonacular.com/recipes/complexSearch?query=".rawurlencode($id)."&number=16&apiKey=".$this->api;
         }
+
         $json = file_get_contents($url);
         $array = json_decode($json, true);
-        $orders = Order::find($order);
-        $menus = Menu::get();
+        $orders = $this->svc->getOrderById($order);
+        $menus = $this->svc->getAllMenu();
 
         return view('Customer.menu', [
             'menus' => $array['results'],
@@ -94,10 +89,11 @@ class CustomerController extends Controller
         }else{
             $urlback = "/Menu/$order/$back";
         }
-        $menus = Order::find($order)->menuorder;
+
+        $menus = $this->svc->getOrderById($order);
         $total = 0;
         $cek = 0;
-        foreach($menus as $menu){
+        foreach($menus->menuorder as $menu){
             if($menu->menu_menuId == $cart){
                 $cek = $menu->ID;
                 $total = $menu->qty;
@@ -105,22 +101,17 @@ class CustomerController extends Controller
             }
         }
         if($total == 0){
-            $create = new MenuOrder;
-            $create->order_orderID = $order;
-            $create->menu_menuID = $cart;
-            $create->qty = 1;
-            $create->save();
+            $update = $this->svc->saveMenuOrder($order, $cart);
         }else{
-            $update = MenuOrder::find($cek);
-            $update->qty = $total;
-            $update->save();
+            $update = $this->svc->updateQty($cek, $total);
         }
         return redirect($urlback);
     }
 
     public function cartItem($order, $back)
     {
-        $orders = Order::find($order);
+
+        $orders = $this->svc->getOrderById($order);
         if($back == 'home'){
             $urlback = "/Home/$order";
         }else if($back == 'bill'){
@@ -140,31 +131,35 @@ class CustomerController extends Controller
         if($qty == 0){
             return redirect("/Cart/$order/$back/$id");
         }else{
-            $update = MenuOrder::find($id);
-            $update->qty = $qty;
-            $update->save();
+
+            $update = $this->svc->updateQty($id, $qty);
             return redirect("/Cart/$order/$back");
         }
     }
 
     public function deleteQuantity($order, $back, $id)
     {
-        $update = MenuOrder::find($id);
-        $update->delete();
+
+        $update = $this->svc->deleteQty($id);
         return redirect("/Cart/$order/$back");
     }
 
     public function updateAmount($order, $total, $back)
     {
-        $orders = Order::find($order);
-        $orders->amount = $total;
-        $orders->save();
+
+        $orders = $this->svc->updateAmount($order, $total);
         return redirect("Bill/$order/$back");
     }
 
     public function bill($order, $back)
     {
-        $orders = Order::find($order);
+        $orders = $this->svc->getOrderById($order);
+        $noPayment = $orders->table->tableId;
+        $noPayment = $noPayment.$order;
+        $payments = $this->svc->getPaymentById($noPayment);
+        if($payments == null){
+            $create = $this->svc->savepayment($noPayment, $order);
+        }
         return view('Customer.bill', [
             'order' => $orders,
             'query' => $back,
@@ -173,35 +168,24 @@ class CustomerController extends Controller
 
     public function payment($order, $method)
     {
-        $orders = Order::find($order);
+
+        $orders = $this->svc->getOrderById($order);
         $noPayment = $orders->table->tableId;
         $noPayment = $noPayment.$order;
-        $payments = Payment::find($noPayment);
-        if($payments == null){
-            $create = new Payment;
-            $create->paymentID = $noPayment;
-            $create->paymenttype = $method;
-            $create->orderID = $order;
-            $create->statusPayment = 0;
-            $create->save();
-        }else{
-            $payments->paymenttype = $method;
-            $payments->save();
-        }
+        $payments = $this->svc->getPaymentById($noPayment);
+        $payments = $this->svc->updatePayment($noPayment, $method);
+
+        $payments = $this->svc->getPaymentById($noPayment);
         if($payments->statusPayment == 0){
             return view('Customer.payment', [
                 'order' => $orders,
                 'method' => $method,
             ]);
         }else{
-            $orders = Order::find($order);
+            $orders = $this->svc->getOrderById($order);
             foreach($orders->menuorder as $item){
-                if($item->stat != NULL){
-                    $update = MenuOrder::find($item->ID);
-                    $update->stat = 1;
-                    $update->save();
-                }else{
-                    return 'nice';
+                if($item->stat == NULL){
+                    $update = $this->svc->updateStatusOrder($item->ID);
                 }
             }
             $meja = $orders->table->tableId;
@@ -211,11 +195,31 @@ class CustomerController extends Controller
 
     public function viewOrder($meja)
     {
-        $mejas = Table::find($meja);
-        $orders = Order::where('tableID', '=', $meja)->get()->where('stat', '=', 0)->all();
+
+        $mejas = $this->svc->getTableById($meja);
+        $orders = $this->svc->getOrderByTableAndStatus($meja);
         return view('Customer.order',[
             'meja' => $mejas,
             'orders' => $orders,
         ]);
+    }
+
+    public function barcode($id)
+    {
+
+        $order = $this->svc->getOrderById($id);
+
+        return view('Customer.barcodePayment',[
+            'order' => $order,
+        ]);
+    }
+
+    public function bayar($id)
+    {
+
+        $this->svc->updateStatus($id);
+        $order = $this->svc->getOrderById($id);
+        $meja = $order->table->tableId;
+        return redirect("/Order/".$meja);
     }
 }

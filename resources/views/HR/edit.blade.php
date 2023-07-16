@@ -13,14 +13,14 @@
 
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text">EmployeeName</span>
+                <span class="input-group-text">Nama Karyawan</span>
             </div>
             <input type="text" name="name" aria-label="name" class="form-control" value="{{$employee->name}}">
         </div>
 
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text">EmployeType</span>
+                <span class="input-group-text">Jabatan Karyawan</span>
             </div>
             <select id="employeetype" name="employeetype" class="form-control">
                 @foreach ($employeetype as $em)
@@ -36,7 +36,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Password</span>
             </div>
-            <input type="text"  name="password" aria-label="password" class="form-control">
+            <input type="password"  name="password" aria-label="password" class="form-control">
         </div>
 
 

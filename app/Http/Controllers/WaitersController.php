@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\domain\Sales\Service\SalesService;
+use App\Domain\Sales\Service\SalesService;
+use Illuminate\Http\Request;
 
 class WaitersController extends Controller{
+
+    private $svc;
+
+    public function __construct()
+    {
+        $this->svc = new SalesService();
+    }
+
     public function view(){
-        $svc = new SalesService();
-        $tables = $svc->getAllTable();
+        $tables = $this->svc->getAllTable();
 
         return view('Waiter/waiter',[
             'tables' => $tables,
@@ -16,9 +24,17 @@ class WaitersController extends Controller{
     }
 
     public function changeTable($id){
-        $svc = new SalesService();
-        $temp = $svc->saveIfTable($id);
-        $tables = $svc->getAllTable();
+        $temp = $this->svc->saveIfTable($id);
+        $tables = $this->svc->getAllTable();
+
+        return redirect('/Waiters');
+
+    }
+
+    public function changeOrder($orderId,$menuId){
+        $tables = $this->svc->getAllTable();
+        $menu = $this->svc->saveMenuById($menuId);
+        $menu = $this->svc->checkIfOrderId($orderId);
 
         return view('Waiter/waiter',[
             'tables' => $tables,
@@ -26,16 +42,18 @@ class WaitersController extends Controller{
 
     }
 
-    public function changeOrder($orderId,$menuId){
-        $svc = new SalesService();
-        $tables = $svc->getAllTable();
-        $menu = $svc->saveMenuById($menuId);
-        $menu = $svc->checkIfOrderId($orderId);
+    public function addTable(Request $req){
+        $tables = $this->svc->getAllTable();
+        $this->svc->addNewTable($req);
 
-        return view('Waiter/waiter',[
-            'tables' => $tables,
-        ]);
+        return redirect('/Waiters');
+    }
 
+    public function delTable(){
+
+        $this->svc->delTable();
+
+        return redirect('/Waiters');
     }
 }
 

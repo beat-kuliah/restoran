@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chef Restoran Oke</title>
+    <title>Kasir Restoran Oke</title>
     <link href="/css/app.css" rel="stylesheet">
     <script src="/js/app.js" charset="utf=8"></script>
 <body>
@@ -12,13 +12,13 @@
             @if (Auth::check())
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/CashierHome">Home</a>
+                        <a class="nav-link" href="/CashierHome">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/CashierHistory">History Pembayaran</a>
+                        <a class="nav-link" href="/CashierHistory">Riwayat Pembayaran</a>
                     </li>
                     <li class="nav-item ">
-                    <a class="nav-link disabled"> Cashier, {{ Auth::user()->name }}</a>
+                    <a class="nav-link disabled"> Kasir, {{ Auth::user()->name }}</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">

@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link active" href="/Home/{{$order->orderID}}">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link active" href="/Home/{{$order->orderID}}">Beranda <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle nav-link" href="" id="navbarDropdownMenuLink" role="button"

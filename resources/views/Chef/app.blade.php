@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title> Restaurant Chef </title>
+    <title>Chef Restaurant Chef </title>
     <link href="/css/app.css" rel="stylesheet">
 </head>
 <body>

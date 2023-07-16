@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="alert alert-danger" role="alert">
-        SORRY, YOU ARE NOT CASHIER. PLEASE LOGIN.
+       Maaf, Anda bukanlah kasir! Tolong login kembali.
     </div>
 </body>
 

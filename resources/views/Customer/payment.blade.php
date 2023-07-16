@@ -1,4 +1,4 @@
-@extends('Customer.footer')
+@extends('footer')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script type="text/javascript" src="/js/app.js"></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <title>Document</title>
+    <title>Pembayaran</title>
 </head>
 <style>
     .bill {
@@ -30,7 +30,7 @@
 
     @if($method == 2)
         <p style="font-size: 50px;color: rgb(0, 0, 0);text-align: center;">Gopay</h2><br>
-        <img src="https://chart.googleapis.com/chart?chl=BarcodesInc&chs=200x200&cht=qr&chld=H|0" alt="barcode" style="margin: 20px 0 20px 0">
+            <a href="/Barcode/{{$order->orderID}}" > {!! QrCode::size(250)->generate('/barcode/{{$order->orderID}}'); !!} </a>
         <p>Silahkan lakukan pembayaran melalui aplikasi<br>Go-Pay anda</p>
     @else
         <div style="margin: 75px 0 75px 0">
@@ -38,7 +38,9 @@
             <p>Silahkan untuk melakukan pembayaran<br>ke kasir sejumlah Rp {{number_format($order->amount, 0, ".", ".")}}</p>
         </div>
     @endif
-    <a href="/Bill/{{$order->orderID}}/{{$order->amount}}/cart" style="color: #C4C4C4;font-size: 30px">Batalkan</a>
+    <div class="container">
+    <a href="/Bill/{{$order->orderID}}/{{$order->amount}}/cart"><button type="button" class="btn btn-secondary btn-lg btn-block">Batalkan</button></a>
+    </div>
     </center>
 </body>
 <script>
