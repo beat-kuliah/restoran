@@ -30,9 +30,4 @@ class Order extends Model
     {
         return $this->hasOne(Payment::class, 'orderID');
     }
-
-    public function statusPemesanan()
-    {
-        return $this->hasOne(StatusPemesanan::class, 'statusId');
-    }
 }
