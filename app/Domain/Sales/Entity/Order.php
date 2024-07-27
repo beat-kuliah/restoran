@@ -11,19 +11,28 @@ class Order extends Model
     protected $primaryKey = 'orderID';
     public $incrementing = false;
 
-    public function table(){
+    public function table()
+    {
         return $this->belongsTo(Table::class, 'tableID');
     }
 
-    public function menu(){
+    public function menu()
+    {
         return $this->belongsToMany(Menu::class);
     }
 
-    public function menuorder(){
+    public function menuorder()
+    {
         return $this->hasMany(MenuOrder::class);
     }
 
-    public function payment(){
+    public function payment()
+    {
         return $this->hasOne(Payment::class, 'orderID');
+    }
+
+    public function statusPemesanan()
+    {
+        return $this->hasOne(StatusPemesanan::class, 'statusId');
     }
 }
