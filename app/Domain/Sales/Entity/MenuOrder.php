@@ -21,6 +21,6 @@ class MenuOrder extends Model
 
     public function statusPemesanan()
     {
-        return $this->belongsTo(StatusPemesanan::class, 'statusID');
+        return $this->belongsTo(StatusPemesanan::class, 'stat');
     }
 }
