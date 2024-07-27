@@ -2,8 +2,8 @@
 
 namespace App\Factory;
 
-use App\domain\HR\service\EmployeeService;
-use App\domain\HR\entity\Employee;
+use App\Domain\HR\Service\EmployeeService;
+use App\Domain\HR\Entity\Employee;
 
 
 class EmployeeFactory
