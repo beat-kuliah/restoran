@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Chef Restaurant Chef </title>
     <link href="/css/app.css" rel="stylesheet">
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" >Restaurant OKE</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand">Restaurant OKE</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         </a>
@@ -21,4 +25,5 @@
     </div>
 
 </body>
+
 </html>

@@ -1,10 +1,13 @@
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Kasir Restoran Oke</title>
     <link href="/css/app.css" rel="stylesheet">
     <script src="/js/app.js" charset="utf=8"></script>
+
 <body>
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <a class="navbar-brand text-white">Restoran OKE</a>
@@ -18,7 +21,7 @@
                         <a class="nav-link" href="/CashierHistory">Riwayat Pembayaran</a>
                     </li>
                     <li class="nav-item ">
-                    <a class="nav-link disabled"> Kasir, {{ Auth::user()->name }}</a>
+                        <a class="nav-link disabled"> Kasir, {{ Auth::user()->name }}</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -33,4 +36,5 @@
         @yield('content')
     </div>
 </body>
+
 </html>
