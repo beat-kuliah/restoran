@@ -1,6 +1,6 @@
 <?php
 
-namespace App\domain\HR\dao;
+namespace App\Domain\HR\Dao;
 
 /**
  *Hak cipta dari source code ini dimiliki oleh :
@@ -10,8 +10,8 @@ namespace App\domain\HR\dao;
  *Fransiskus
  */
 
-use App\domain\HR\entity\Employee;
-use App\domain\HR\entity\EmployeeType;
+use App\Domain\HR\Entity\Employee;
+use App\Domain\HR\Entity\EmployeeType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,8 +48,8 @@ class EmployeeDao
         return EmployeeType::all();
     }
 
-    public function login(Request $req){
-        return Auth::attempt(['employeeID' =>  $req->id ,'password' => $req->password, 'employeeType' => 3]);
+    public function login(Request $req)
+    {
+        return Auth::attempt(['employeeID' =>  $req->id, 'password' => $req->password, 'employeeType' => 3]);
     }
-
 }

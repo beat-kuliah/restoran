@@ -1,6 +1,6 @@
 <?php
 
-namespace App\domain\HR\entity;
+namespace App\Domain\HR\Entity;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,10 +8,10 @@ class EmployeeType extends Model
 {
 
     protected $table = "employeetypes";
-    protected $primaryKey="employeetype";
+    protected $primaryKey = "employeetype";
 
-    public function employee(){
+    public function employee()
+    {
         return $this->hasMany(Employee::class);
     }
-
 }

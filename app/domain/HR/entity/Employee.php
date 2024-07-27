@@ -1,7 +1,8 @@
 <?php
 
-namespace App\domain\HR\entity;
+namespace App\Domain\HR\Entity;
 
+use App\Domain\Sales\Entity\Payment;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -10,15 +11,17 @@ class Employee extends Model implements Authenticatable
 {
     use AuthenticableTrait;
 
-    protected $table="employees";
+    protected $table = "employees";
     protected $primaryKey = "employeeID";
     public $incrementing = false;
 
-    public function payment(){
+    public function payment()
+    {
         return $this->hasMany(Payment::class);
     }
 
-    public function employeeTypes(){
-        return $this->belongsTo(EmployeeType::class,'employeeType','employeetype');
+    public function employeeTypes()
+    {
+        return $this->belongsTo(EmployeeType::class, 'employeeType', 'employeetype');
     }
 }
